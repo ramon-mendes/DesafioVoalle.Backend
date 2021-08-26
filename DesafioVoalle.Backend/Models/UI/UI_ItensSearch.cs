@@ -1,0 +1,8 @@
+namespace DesafioVoalle.Backend.Models
+{
+	public class UI_ItensSearch
+	{
+		public string Name { get; set; }
+		public string Dt { get; set; }
+	}
+}
