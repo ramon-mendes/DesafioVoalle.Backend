@@ -8,13 +8,21 @@ using DesafioVoalle.Backend.Classes;
 
 namespace DesafioVoalle.Backend.Models
 {
+	public enum EAuthType
+	{
+		NORMAL,
+		GOOGLE
+	}
+
 	public class UserModel
 	{
 		[Key]
-		public int Id  { get; set; }
+		public Guid Id { get; set; }
+		public EAuthType Type { get; set; }
 		public string Name { get; set; }
 		public string Email { get; set; }
-		//public string PWD { get; set; }
+		public string GoogleIdToken { get; set; }
+		public string PWD { get; set; }
 		public EIdiom Idiom { get; set; }
 	}
 

@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using X.PagedList.Mvc;
-using X.PagedList.Mvc.Core.Common;
 using X.PagedList.Web.Common;
 
 namespace DesafioVoalle.Backend.Classes

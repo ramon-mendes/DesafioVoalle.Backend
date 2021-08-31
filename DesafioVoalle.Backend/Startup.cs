@@ -39,7 +39,8 @@ namespace DesafioVoalle.Backend
 			services.AddHttpContextAccessor();
 
 			services.AddDbContext<MVCContext>(options =>
-				options.UseSqlite(Configuration.GetConnectionString("conn"))
+				options.UseSqlServer(Configuration.GetConnectionString("conn_sqlserver"))
+				//options.UseSqlite(Configuration.GetConnectionString("conn"))
 			);
 
 			services.AddSession();
@@ -54,8 +55,8 @@ namespace DesafioVoalle.Backend
 			_db = db;
 			_provider = app.ApplicationServices;
 
-			//db.Database.Migrate();
-			db.Database.EnsureCreated();
+			db.Database.Migrate();
+			//db.Database.EnsureCreated();
 
 			var t1 = db.Users.ToList();
 			var t2 = db.UserManagers.ToList();
