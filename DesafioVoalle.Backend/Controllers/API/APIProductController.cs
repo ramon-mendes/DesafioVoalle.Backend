@@ -20,22 +20,41 @@ namespace DesafioVoalle.Backend.Controllers.API
 			_db = db;
 		}
 
+		// api/product/list
+		[Route("list")]
+		public List<Product> List()
+		{
+			var user = GetAuthorizedUser();
+			var products = _db.Products.Where(p => p.UserId == user.Id);
+			
+			return products.Select(p => new Product()
+			{
+				Id = p.Id,
+				Name = p.Name,
+				Category = p.Category,
+				Price = p.Price,
+				ImagesURL = p.Images.Select(img => img.Url).ToList(),
+			}).ToList();
+		}
+
 		// api/product/create
 		[HttpPost]
 		[Route("create")]
 		public async Task<ActionResult> Create(Product model)
 		{
+			var user = GetAuthorizedUser();
+
 			// upload images to Azure Blob Storage
 			List<string> images = new List<string>();
 			foreach(var item in model.ImagesURL)
 				images.Add(await UploadMediaBase64(item));
 
-			var user = GetAuthorizedUser();
-
 			ProductModel prod;
 			_db.Products.Add(prod = new ProductModel
 			{
+				UserId = user.Id,
 				Name = model.Name,
+				Price = model.Price,
 				Category = model.Category,
 			});
 			_db.SaveChanges();
@@ -106,7 +125,7 @@ namespace DesafioVoalle.Backend.Controllers.API
 			_db.Products.Remove(product);
 			_db.SaveChanges();
 
-			return new NotFoundResult();
+			return Ok();
 		}
 	}
 }
